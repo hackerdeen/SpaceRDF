@@ -4,7 +4,7 @@
 <!DOCTYPE rdf:RDF [
     <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
-    <!ENTITY space "http://www.spacerdf.org/schema#" >
+    <!ENTITY space "http://www.spacerdf.org/schema.xml#" >
     <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
@@ -12,16 +12,16 @@
 ]>
 
 
-<rdf:RDF xmlns="http://www.spacerdf.org/schema#"
-     xml:base="http://www.spacerdf.org/schema#"
+<rdf:RDF xmlns="http://www.spacerdf.org/schema.xml#"
+     xml:base="http://www.spacerdf.org/schema.xml#"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:foaf="http://xmlns.com/foaf/0.1/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:space="http://www.spacerdf.org/schema#">
-    <owl:Ontology rdf:about="http://www.spacerdf.org/schema#">
+     xmlns:space="http://www.spacerdf.org/schema.xml#">
+    <owl:Ontology rdf:about="http://www.spacerdf.org/schema.xml#">
         <dc:title>SpaceRDF Vocabulary</dc:title>
         <rdfs:comment>RDF vocabulary for describing hackerspaces and related concepts</rdfs:comment>
         <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/"/>
@@ -57,7 +57,7 @@
     
 
 
-    <!-- http://www.spacerdf.org/schema#logo -->
+    <!-- http://www.spacerdf.org/schema.xml#logo -->
 
     <owl:ObjectProperty rdf:about="&space;logo">
         <rdfs:comment>A URL for the hackerspace&apos;s logo.</rdfs:comment>
@@ -68,7 +68,7 @@
     
 
 
-    <!-- http://www.spacerdf.org/schema#url -->
+    <!-- http://www.spacerdf.org/schema.xml#url -->
 
     <owl:ObjectProperty rdf:about="&space;url">
         <rdfs:comment>The URL of the hackerspace&apos;s homepage.</rdfs:comment>
@@ -96,7 +96,7 @@
     
 
 
-    <!-- http://www.spacerdf.org/schema#name -->
+    <!-- http://www.spacerdf.org/schema.xml#name -->
 
     <owl:DatatypeProperty rdf:about="&space;name">
         <rdfs:comment>The name of the hackerspace.</rdfs:comment>
@@ -124,7 +124,7 @@
     
 
 
-    <!-- http://www.spacerdf.org/schema#Space -->
+    <!-- http://www.spacerdf.org/schema.xml#Space -->
 
     <owl:Class rdf:about="&space;Space">
         <owl:equivalentClass rdf:resource="&foaf;Group"/>
