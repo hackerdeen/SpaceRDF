@@ -1,0 +1,13 @@
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+  margin-top: 30px;
+}
+
+#footer .credit {
+  margin: 20px 0;
+}
