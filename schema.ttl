@@ -1,3 +1,30 @@
+
+###############################################################################
+# SpaceRDF Ontology
+# DRAFT
+# (C) Iain R. Learmonth and contributors 2013
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+###############################################################################
+
+# Prefix Declarations
+
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix : <http://www.spacerdf.org/schema.xml#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -5,89 +32,169 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 
-dc:title
-    a owl:AnnotationProperty .
+# Ontology Description
 
-<http://www.spacerdf.org/schema.xml#>
+<http://www.spacerdf.org/schema.xml#> a owl:Ontology ;
     dc:title "SpaceRDF Vocabulary" ;
-    a owl:Ontology ;
     rdfs:comment "RDF vocabulary for describing hackerspaces and related concepts" ;
     owl:imports <http://xmlns.com/foaf/0.1/> .
 
-:Space
-    a owl:Class ;
-    rdfs:comment "A space is a physical place, where people can meet and work on their projects. Currently, no effort is made to seperate the physical space from the group of people that use it or any formal organisation structure." ;
+# Class Definitions
+
+:Space a owl:Class ;
+    rdfs:comment """A space is a physical place, where people can meet and work
+                    on their projects. Currently, no effort is made to seperate
+                    the physical space from the group of people that use it or
+                    any formal organisation structure.""" ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
     rdfs:subClassOf foaf:Group ;
-    owl:disjointWith :State .
+    owl:disjointWith :State ;
+    owl:disjointWith :SpaceAPIDocument .
 
-:SpaceAPIDocument
-    a owl:Class ;
+:State a owl:Class ;
+    rdfs:comment """The state of a hackerspace. The validity of instances of 
+                  this class is time-limited.""" ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    owl:disjointWith :Space ;
+    owl:disjointWith :SpaceAPIDocument .
+
+:SpaceAPIDocument a owl:Class ;
     rdfs:comment "A SpaceAPI JSON document found at a SpaceAPI endpoint." ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:subClassOf foaf:Document .
+    rdfs:subClassOf foaf:Document ;
+    owl:disjointWith :State ;
+    owl:disjointWith :Space .
 
-:State
-    a owl:Class ;
-    rdfs:comment "The state of a hackerspace. The validity of instances of this class is time-limited." ;
-    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> .
 
-:email
-    a owl:ObjectProperty ;
-    rdfs:comment "A contact email address for the hackerspace. If this address is a mailing list, consider using space:ml instead." ;
-    rdfs:domain :Space ;
-    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:subPropertyOf foaf:mbox .
+# Basic space properties
 
-:logo
-    a owl:ObjectProperty ;
-    rdfs:comment "A URL for the hackerspace's logo." ;
-    rdfs:domain :Space ;
-    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:range foaf:Image ;
-    rdfs:subPropertyOf foaf:logo .
-
-:ml
-    a owl:ObjectProperty ;
-    rdfs:comment "The primary mailing list for a hackerspace." ;
-    rdfs:domain :Space ;
-    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> .
-
-:name
-    a owl:DatatypeProperty ;
+:name a owl:DatatypeProperty ;
     rdfs:comment "The name of the hackerspace." ;
-    rdfs:domain :Space ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
     rdfs:range xsd:string ;
     rdfs:subPropertyOf foaf:name .
 
-:open
-    a owl:DatatypeProperty ;
-    rdfs:comment "Boolean value reflecting whether or not the space is open or closed for a given State." ;
-    rdfs:domain :State ;
+:logo a owl:ObjectProperty ;
+    rdfs:comment "A URL for the hackerspace's logo." ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:range xsd:boolean .
-
-:phone
-    a owl:ObjectProperty ;
-    rdfs:comment "Either a tel:, sip: or h323: URI for contacting the hackerspace with voice (and maybe video)." ;
     rdfs:domain :Space ;
-    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:subPropertyOf foaf:phone .
+    rdfs:range foaf:Image ;
+    rdfs:subPropertyOf foaf:logo .
 
-:spaceAPI
-    a owl:ObjectProperty ;
+:url a owl:ObjectProperty ;
+    rdfs:comment "The URL of the hackerspace's homepage." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range foaf:Document ;
+    rdfs:subPropertyOf foaf:homepage .
+
+:address a owl:DatatypeProperty ;
+    rdfs:comment "The postal address of the hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range xsd:string .
+
+:location a owl:ObjectProperty ;
+    rdfs:comment "The geographical location of the hackersapce." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range geo:Point .
+
+:spaceAPI a owl:ObjectProperty ;
     rdfs:comment "A link to the SpaceAPI endpoint for a hackerspace." ;
-    rdfs:domain :Space ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
     rdfs:range :SpaceAPIDocument .
 
-:triggerPerson
-    a owl:ObjectProperty ;
-    rdfs:comment "A foaf:PersonalProfileDocument for the person that triggered the State change." ;
-    rdfs:domain :State ;
+# Space contact details
+
+
+:phone a owl:ObjectProperty ;
+    rdfs:comment "A tel: URI for contacting the hackerspace." ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:subPropertyOf foaf:phone .
+
+:sip a owl:ObjectProperty ;
+    rdfs:comment "A sip: URI for contacting the hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:subPropertyOf foaf:phone .
+
+:irc a owl:ObjectProperty ;
+    rdfs:comment "An irc: or ircs: URI for the hackerspace's IRC channel" ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space .
+
+:twitter a owl:ObjectProperty ;
+    rdfs:comment "The Twitter account for a hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range foaf:OnlineAccount ;
+    rdfs:subPropertyOf foaf:account .
+
+:facebook a owl:ObjectProperty ;
+    rdfs:comment "The Facebook account for a hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range foaf:OnlineAccount ;
+    rdfs:subPropertyOf foaf:account .
+
+:googleplus a owl:ObjectProperty ;
+    rdfs:comment "The Google Plus account for a hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range foaf:OnlineAccount ;
+    rdfs:subPropertyOf foaf:account .
+
+:identica a owl:ObjectProperty ;
+    rdfs:comment "The identica account for a hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range foaf:OnlineAccount ;
+    rdfs:subPropertyOf foaf:account .
+
+:foursquare a owl:ObjectProperty ;
+    rdfs:comment "The foursquare account for a hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:range foaf:OnlineAccount ;
+    rdfs:subPropertyOf foaf:account .
+
+:email a owl:ObjectProperty ;
+    rdfs:comment """A contact email address for the hackerspace. If this
+                    address is a mailing list, consider using space:ml
+                    instead.""" ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space ;
+    rdfs:subPropertyOf foaf:mbox .
+
+:ml a owl:ObjectProperty ;
+    rdfs:comment "A mailing list for a hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space .
+
+:jabber a owl:ObjectProperty ;
+    rdfs:comment "An XMPP conference address for the hackerspace." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :Space .
+
+# State properties
+
+:open a owl:DatatypeProperty ;
+    rdfs:comment "Boolean value reflecting whether or not the space is open or closed for a given State." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :State ;
+    rdfs:range xsd:boolean .
+
+:triggerPerson a owl:ObjectProperty ;
+    rdfs:comment "A foaf:PersonalProfileDocument for the person that triggered the State change." ;
+    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
+    rdfs:domain :State ;
     rdfs:range foaf:PersonalProfileDocument .
 
 :triggeredBy
@@ -97,18 +204,9 @@ dc:title
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
     rdfs:range xsd:string .
 
-:twitter
-    a owl:ObjectProperty ;
-    rdfs:comment "The Twitter account for a hackerspace." ;
-    rdfs:domain :Space ;
+:changed a owl:ObjectProperty ;
+    rdfs:comment "The time at which the state was changed." ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:range foaf:OnlineAccount ;
-    rdfs:subPropertyOf foaf:account .
+    rdfs:domain :State ;
+    rdfs:range time:Instant .
 
-:url
-    a owl:ObjectProperty ;
-    rdfs:comment "The URL of the hackerspace's homepage." ;
-    rdfs:domain :Space ;
-    rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
-    rdfs:range foaf:Document ;
-    rdfs:subPropertyOf foaf:homepage .
