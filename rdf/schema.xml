@@ -12,24 +12,22 @@
                     any formal organisation structure.</rdfs:comment>
 		<rdfs:isDefinedBy rdf:resource="http://www.spacerdf.org/schema.xml" />
 		<rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Group" />
-		<owl:disjointWith>
-			<owl:Class rdf:about="http://www.spacerdf.org/schema.xml#State">
-				<rdfs:comment>The state of a hackerspace. The validity of instances of 
+		<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#SpaceAPIDocument" />
+		<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#State" />
+	</owl:Class>
+	<owl:Class rdf:about="http://www.spacerdf.org/schema.xml#State">
+		<rdfs:comment>The state of a hackerspace. The validity of instances of 
                   this class is time-limited.</rdfs:comment>
-				<rdfs:isDefinedBy rdf:resource="http://www.spacerdf.org/schema.xml" />
-				<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#Space" />
-				<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#SpaceAPIDocument" />
-			</owl:Class>
-		</owl:disjointWith>
-		<owl:disjointWith>
-			<owl:Class rdf:about="http://www.spacerdf.org/schema.xml#SpaceAPIDocument">
-				<rdfs:comment>A SpaceAPI JSON document found at a SpaceAPI endpoint.</rdfs:comment>
-				<rdfs:isDefinedBy rdf:resource="http://www.spacerdf.org/schema.xml" />
-				<rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Document" />
-				<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#State" />
-				<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#Space" />
-			</owl:Class>
-		</owl:disjointWith>
+		<rdfs:isDefinedBy rdf:resource="http://www.spacerdf.org/schema.xml" />
+		<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#Space" />
+		<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#SpaceAPIDocument" />
+	</owl:Class>
+	<owl:Class rdf:about="http://www.spacerdf.org/schema.xml#SpaceAPIDocument">
+		<rdfs:comment>A SpaceAPI JSON document found at a SpaceAPI endpoint.</rdfs:comment>
+		<rdfs:isDefinedBy rdf:resource="http://www.spacerdf.org/schema.xml" />
+		<rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Document" />
+		<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#State" />
+		<owl:disjointWith rdf:resource="http://www.spacerdf.org/schema.xml#Space" />
 	</owl:Class>
 	<owl:DatatypeProperty rdf:about="http://www.spacerdf.org/schema.xml#name">
 		<rdfs:comment>The name of the hackerspace.</rdfs:comment>
