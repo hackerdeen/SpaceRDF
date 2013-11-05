@@ -108,7 +108,7 @@
     rdfs:comment """A recorded state of the hackerspace. Objects referenced
                     will not necessarily be the latest state, and likely
                     won't be. The latest state can be determined by the
-                    space:changed field of the space:State."""
+                    space:changed field of the space:State.""" ;
     rdfs:isDefinedBy <http://www.spacerdf.org/schema.xml> ;
     rdfs:domain :Space ;
     rdfs:range :State .
